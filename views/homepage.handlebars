@@ -1,0 +1,20 @@
+<ol class="comment-list">
+    <li>
+        <article class="post">
+            <div class="title">
+                <h2>{{title}}</h2>
+                <p>{{body}}</p>
+                <a href="/post/{{id}}/edit">Edit</a>
+                <form action="/post/{{id}}" method="post">
+                    <input type="hidden" name="_method" value="delete">
+                    <input type="submit" value="Delete">
+                </form>
+            </div>
+            <div class="meta">
+                <p>{{vote_count}} points by {{user.username}} on {{created_at}}</p>
+                <a href="/comments/{{id}}">{{comments.length}} comments</a>
+                <p>{{email}}</p>
+                <p>{{body}}</p>
+        </article>
+    </li>
+</ol>

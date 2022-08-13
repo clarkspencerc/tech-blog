@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tech Blog</title>
+        <link rel="stylesheet" href="../../public/stylesheets/style.css">
+    </head>
+
+    <body>
+        <div class="container">
+            <header>
+                <h1>Tech Blog</h1>
+            </header>
+            <nav>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/posts/create">Create Post</a></li>
+                </ul>
+            </nav>
+            <main>
+                {{#each posts}}
+                    <article>
+                        <h2>{{title}}</h2>
+                        <p>{{body}}</p>
+                        <a href="/posts/{{id}}/edit">Edit</a>
+                        <form action="/posts/{{id}}" method="post">
+                            <input type="hidden" name="_method" value="delete">
+                            <input type="submit" value="Delete">
+                        </form>
+                    </article>
+                {{/each}}
+            </main>
+            <footer>
+                <p>&copy;</p>
+            </footer>
+        </div>
+    </body>
+
+</html>
