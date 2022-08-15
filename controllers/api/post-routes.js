@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const sequelize = require('../config/connection');
+const sequelize = require('../../config/connection');
 const { User, Post, Comment } = require('../../models');
 const withAuth = require('../../utils/auth');
 const { includes } = require('lodash');
@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
             'title',
             'body',
             'created_at',
-            [sequelize.literal('(SELECT * FROM comment WHERE comment.post_id = post.id)'), 'comments'],
+            [sequelize.literal('(SELECT COUNT(*) FROM comment WHERE comment.post_id = post.id)'), 'comments'],
         ],
         include: [
                 {
@@ -45,7 +45,7 @@ router.get('/:id', (req, res) => {
             'title',
             'body',
             'created_at',
-            [sequelize.literal('(SELECT * FROM comment WHERE comment.post_id = post.id)'), 'comments'],
+            [sequelize.literal('(SELECT COUNT(*) FROM comment WHERE comment.post_id = post.id)'), 'comments'],
         ],
         include: [
                 {
@@ -134,5 +134,5 @@ router.delete('/:id', withAuth, (req, res) => {
     });
 });
 
-module.export = router;
+module.exports = router;
 

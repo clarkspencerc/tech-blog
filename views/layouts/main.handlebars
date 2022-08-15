@@ -8,33 +8,32 @@
     </head>
 
     <body>
-        <div class="container">
+        <div class="wrapper">
             <header>
-                <h1>Tech Blog</h1>
+                <h1>
+                    <a href="/">Tech Blog</a>
+                 </h1>
+           
+                <nav>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/posts/create">Create Post</a></li>
+                        <li><a href="/login">login</a></li>
+                    
+                    </ul>
+                    <button id="logout" class="btn-no-style">Logout</button>
+
+                </nav>
             </header>
-            <nav>
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/posts/create">Create Post</a></li>
-                </ul>
-            </nav>
             <main>
-                {{#each posts}}
-                    <article>
-                        <h2>{{title}}</h2>
-                        <p>{{body}}</p>
-                        <a href="/posts/{{id}}/edit">Edit</a>
-                        <form action="/posts/{{id}}" method="post">
-                            <input type="hidden" name="_method" value="delete">
-                            <input type="submit" value="Delete">
-                        </form>
-                    </article>
-                {{/each}}
+                {{{ body }}}
             </main>
             <footer>
                 <p>&copy;</p>
             </footer>
         </div>
+
     </body>
+    <script src="/javascript/logout.js"></script>
 
 </html>

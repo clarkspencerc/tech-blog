@@ -1,5 +1,5 @@
 <ol class="post-list">
-    {{#each posts as |post|}}}}
+    {{#each posts as |post|}}
     <li>
         <article class="post">
             <div class="title">
@@ -10,12 +10,6 @@
                     <input type="hidden" name="_method" value="delete">
                     <input type="submit" value="Delete">
                 </form>
-            </div>
-            <div class="meta">
-                <p> by {{post.user.username}} on {{post.created_at}}</p>
-                <a href="/comments/{{id}}">{{post.comments.length}} comments</a>
-                <p>{{title}}</p>
-                <p>{{body}}</p>
             </div>
         </article>
     </li>
