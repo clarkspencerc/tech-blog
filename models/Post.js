@@ -1,28 +1,28 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
-const { init } = require('./User');
 
-class Post extends Model { 
-    static comment(body, models){
+
+class Post extends Model {
+    static comment(body, models) {
         return models.Comment.create({
             user_id: body.user_id,
-            post_id: body.post_id,
-        }).then( () => {
+            post_id: body.post_id
+        }).then(() => {
             return Post.findOne({
                 where: {
                     id: body.post_id
-                }, 
+                },
                 attributes: [
                     'id',
                     'title',
-                    'body',
+                    'post_text',
                     'created_at',
-                    [sequelize.literal('(SELECT * FROM comment WHERE comment.post_id = post.id)'), 'comments'],
+                    [sequelize.literal('(SELECT COUNT(*) FROM comment WHERE post.id = comment.post_id)'), 'coumments']
                 ],
                 include: [
                     {
-                        model: models.Comment, 
-                        attributes: ['id', 'body', 'created_at', 'user_id', 'post_id'],
+                        model: models.Comment,
+                        attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
                         include: {
                             model: models.User,
                             attributes: ['username']
@@ -46,13 +46,9 @@ Post.init(
             type: DataTypes.STRING,
             allowNull: false
         },
-        body: {
-            type: DataTypes.TEXT,
-            allowNull: false
-        },
-        created_at: {
-            type: DataTypes.DATE,
-            allowNull: false
+        post_text: {
+            type: DataTypes.STRING,
+            allowNull: false,
         },
         user_id: {
             type: DataTypes.INTEGER,
@@ -64,12 +60,10 @@ Post.init(
     },
     {
         sequelize,
-        timestamps: true,
         freezeTableName: true,
         underscored: true,
         modelName: 'post'
     }
-); 
-
+);
 
 module.exports = Post;

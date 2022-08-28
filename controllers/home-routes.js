@@ -2,19 +2,19 @@ const router = require('express').Router();
 const sequelize = require('../config/connection');
 const { User, Post, Comment } = require('../models');
 
-router.get('/', (req, res) => {
-    Post.findAll({
+router.get("/", (req, res) => {
+    Post.findAll({ 
         attributes: [
             'id',
             'title',
-            'body',
+            'post_text',
             'created_at',
-            [sequelize.literal('(SELECT COUNT(*) FROM comment WHERE comment.post_id = post.id)'), 'comments'],
-        ], 
+            [sequelize.literal('(SELECT COUNT(*) FROM comment WHERE post.id = comment.post_id)'), 'comment_count']
+        ],
         include: [
             {
                 model: Comment,
-                attributes: ['id', 'body', 'created_at', 'user_id', 'post_id'],
+                attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
                 include: {
                     model: User,
                     attributes: ['username']
@@ -27,19 +27,18 @@ router.get('/', (req, res) => {
         ]
     })
     .then(dbPostData => {
-        const posts = dbPostData.map(post => post.get({ plain: true }));
-        res.render('homepage', {
-             posts,
+        const posts = dbPostData.map((post) => post.get({ plain: true }));
+        res.render("homepage", { 
+            posts,
             loggedIn: req.session.loggedIn
-         });
+        });
     })
-    .catch(err => {
-        console.log(err);
+    .catch((err) => {
         res.status(500).json(err);
     }); 
 }); 
 
-router.get('/post/:id', (req, res) => {
+router.get("/post/:id", (req, res) => {
     Post.findOne({
         where: {
             id: req.params.id
@@ -47,14 +46,14 @@ router.get('/post/:id', (req, res) => {
         attributes: [
             'id',
             'title',
-            'body',
+            'post_text',
             'created_at',
-            [sequelize.literal('(SELECT COUNT(*) FROM comment WHERE comment.post_id = post.id)'), 'comments'],
+            [sequelize.literal('(SELECT COUNT(*) FROM comment WHERE post.id = comment.post_id)'), 'comment_count']
         ],
         include: [
             {
                 model: Comment,
-                attributes: ['id', 'body', 'created_at', 'user_id', 'post_id'],
+                attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
                 include: {
                     model: User,
                     attributes: ['username']
@@ -66,29 +65,38 @@ router.get('/post/:id', (req, res) => {
             }
         ]
     })
-        .then(dbPostData => {
-            if (!dbPostData) {
-                res.status(404).json({ message: 'No post found with this id' });
-                return;
-            }
+    .then((dbPostData) => {
+        if (dbPostData) {
             const post = dbPostData.get({ plain: true });
-            res.render('single-post', {
-                post, 
+            res.render("single-post", { 
+                post,
                 loggedIn: req.session.loggedIn
-            });
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json(err);
-        });
+             });
+        } else {
+            res.status(404).json({ message: 'No post found with this id' });
+            return;
+        } 
+    })
+    .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+    });
 }); 
 
-router.get('/login', (req, res) => {
+router.get("/login", (req, res) => {
     if(req.session.loggedIn) {
         res.redirect('/');
         return; 
     }
-    res.render('login');
+    res.render("login");
 });
+
+// router.get("/signup", (req, res) => {
+//     if(req.session.loggedIn) {
+//         res.redirect("/");
+//         return;
+//     }
+//     res.render("signup");
+// } );
 
 module.exports = router;
