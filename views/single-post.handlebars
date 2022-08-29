@@ -4,11 +4,12 @@
     {{#if loggedIn}}
     <form class="comment-form">
         <div>
-            <textarea name="commnet-body"></textarea>
+            <input type="hidden" name="post-id" value="{{post._id}}"/>
+            <label for="comment-body">Comment:</label>
+            <textarea class="comment-body" name="comment-body"></textarea>
+            <button class="btn" type="submit">submit</button>
         </div>
-        <div>
-            <button type="submit">add comment</button>
-        </div>
+        
     </form>
     {{/if}}
 
@@ -16,5 +17,8 @@
 
     {{#if loggedIn}}
 
-<script src="/javascript/comment.js"></script>
-{{/if}}
+    <script src="/javascript/comment.js"></script>
+    <script src="/javascript/edit-post.js"></script>
+    <script src="/javascript/delete-post.js"></script>
+    {{/if}}
+

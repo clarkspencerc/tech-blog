@@ -5,29 +5,26 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Tech Blog</title>
         <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,700&display=swap" rel="stylesheet">
-        <!-- <link rel="stylesheet" href="/stylesheets/style.css"> -->
+        <link rel="stylesheet" href="/stylesheets/style.css">
     </head>
 
     <body class="flex-column min-100-vh">
-        <div class="wrapper">
-           
-            <header>
-                <h1>
-                    <a href="/">Tech Blog</a>
-                 </h1>
-                <nav class="navbar">
-                    <ul>
-                        <li><a href="/">Home</a></li>
-                        {{#if loggedIn}}
-                        <li><a href="/dashboard">Dashbaord</a></li>
-                        <li><a href="/posts/create">Create Post</a></li>
-                        <button id="logout" class="btn-no-style">Logout</button>
-                        {{else}}
-                        <li><a href="/login">login</a></li>
-                        {{/if}}
-                    </ul>
-                </nav>
-            </header>
+        <nav class="navbar">
+            <ul class="flex-row">
+                <li class="li-inline nav-item"><a href="/">Home</a></li>
+                {{#if loggedIn}}
+                <li class="li-inline nav-item"><a href="/dashboard">Dashboard</a></li>
+                <li class="li-inline nav-item"><btn id="logout"><a href="/login" id="logout-link">Logout</a></btn></li>
+                {{else}}
+                <li class="li-inline nav-item"><a href="/login">login</a></li>
+                {{/if}}
+
+            </ul>
+        </nav>
+        <header class="hero">
+            <h1 class="app-title"><a href="/">Tech Blog</a></h1>
+        </header>
+
             <main class="col-auto">
                 {{{ body }}}
             </main>

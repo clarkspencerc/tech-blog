@@ -108,12 +108,14 @@ router.delete("/:id", withAuth, (req, res) => {
             id: req.params.id
         }
     })
-        .then(dbPostData => {
-            if (!dbPostData) {
+        .then(affectedRows => {
+            if (affectedRows > 0) {
+                res.json(200).end();
+            } else {
                 res.status(404).json({ message: 'No post found with this id' });
                 return;
             }
-            res.json(200).end();
+            
         }).catch(err => {
             console.log(err);
             res.status(500).json(err);
