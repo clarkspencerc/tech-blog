@@ -29,7 +29,7 @@ I learned about the MVC framework and routes
 For any questions please contact me at clarkspencerc@gmail.com or find me on github at clarkspencerc
 
 ## Deployed
-The site is deployed at [View Site Here](https://clarkspencerc.github.io/tech-blog/)
+The site is deployed at [View Site Here](https://mysterious-shelf-63436.herokuapp.com/dashboard)
 
 ## Screenshot
 ![screenshot of website](./public/images/techblog.png)
